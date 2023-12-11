@@ -1,0 +1,8 @@
+# Project exclude paths
+/finance-parent/bankcard-service/target/
+/finance-parent/customer-service/target/
+/finance-parent/dict-service/target/
+/finance-parent/finance-common/target/
+/finance-parent/finance-gateway/target/
+/finance-parent/finance-service-client/target/
+/finance-parent/service-sms/target/

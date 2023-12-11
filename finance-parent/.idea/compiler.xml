@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="finance-common" />
+        <module name="customer-service" />
+        <module name="finance-service-client" />
+        <module name="bankcard-service" />
+        <module name="finance-gateway" />
+        <module name="fund-service" />
+        <module name="dict-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bankcard-service" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
+      <module name="dict-service" options="-parameters" />
+      <module name="finance-common" options="-parameters" />
+      <module name="finance-gateway" options="-parameters" />
+      <module name="finance-service-client" options="-parameters" />
+      <module name="fund-service" options="-parameters" />
+    </option>
+  </component>
+</project>

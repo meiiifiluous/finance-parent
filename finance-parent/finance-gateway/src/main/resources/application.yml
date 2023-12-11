@@ -1,0 +1,48 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway # 服务名称
+  cloud:
+    nacos:
+      server-addr: localhost:8848 # nacos地址
+    gateway:
+      routes:
+        - id: bankcard # 路由规则id，自定义，唯一
+          uri: lb://bankcard-service # 路由的目标服务，lb代表负载均衡，会从注册中心拉取服务列表
+          predicates: # 路由断言，判断当前请求是否符合当前规则，符合则路由到目标服务
+            - Path=/bank/** # 这里是以请求路径作为判断规则
+        - id: customer # 路由规则id，自定义，唯一
+          uri: lb://customer-service # 路由的目标服务，lb代表负载均衡，会从注册中心拉取服务列表
+          predicates: # 路由断言，判断当前请求是否符合当前规则，符合则路由到目标服务
+            - Path=/customer/** # 这里是以请求路径作为判断规则
+        - id: fund # 路由规则id，自定义，唯一
+          uri: lb://fund-service # 路由的目标服务，lb代表负载均衡，会从注册中心拉取服务列表
+          predicates: # 路由断言，判断当前请求是否符合当前规则，符合则路由到目标服务
+            - Path=/api/** # 这里是以请求路径作为判断规则
+        - id: dict # 路由规则id，自定义，唯一
+          uri: lb://dict-service
+          predicates:
+            - Path=/dict/**
+            - Path=/counter/**
+        - id: sms
+          uri: lb://service-sms
+          predicates:
+            - Path=/sms/**
+
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]': #拦截的请求
+            allowedOrigins: #允许跨域的请求
+              - "*"
+            allowedMethods: #运行跨域的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" #允许请求中携带的头信息
+            allowedCredentials: true #是否允许携带cookie
+            maxAge: 36000 #跨域检测的有效期,单位s
+

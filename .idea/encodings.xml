@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/finance-parent/bankcard-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/bankcard-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/customer-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/customer-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/dict-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/dict-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-service-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-service-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/finance-sms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/fund-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/fund-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/service-sms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-parent/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
