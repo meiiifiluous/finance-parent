@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -80,5 +81,12 @@ public class FundController {
             return Result.build(null, ResultCodeEnum.FUND_IS_NOT_EXISTS);
         } else
             return Result.build(BeanUtils.copyBean(fund, FundVo.class), ResultCodeEnum.SUCCESS);
+    }
+    @ApiOperation("获取所有基金")
+    @GetMapping("/list")
+    public Result getAllFund(){
+        List<Fund> list = fundService.list();
+        System.out.println(list);
+        return Result.build(BeanUtils.copyList(list,FundVo.class), ResultCodeEnum.SUCCESS);
     }
 }

@@ -5,14 +5,20 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.nacos.shaded.org.checkerframework.dataflow.qual.Pure;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
+import com.hdu.finance.common.annotion.CounterValidation;
+import com.hdu.finance.common.annotion.Log;
+import com.hdu.finance.common.domain.common.PageDTO;
 import com.hdu.finance.common.domain.dto.CodeDto;
 import com.hdu.finance.common.domain.dto.CustomerDto;
 import com.hdu.finance.common.domain.dto.CustomerUpdateDto;
 import com.hdu.finance.common.domain.po.Customer;
+import com.hdu.finance.common.domain.query.CustomerQuery;
 import com.hdu.finance.common.domain.vo.CustomerVo;
 import com.hdu.customer.service.CustomerService;
 import com.hdu.finance.common.domain.common.Result;
 import com.hdu.finance.common.domain.common.ResultCodeEnum;
+import com.hdu.finance.common.exception.BusinessException;
 import com.hdu.finance.common.utils.BeanUtils;
 import io.netty.util.NetUtil;
 import io.netty.util.internal.StringUtil;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,24 +45,26 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/customer")
 @Api(tags = "用户管理")
+@CounterValidation
 public class CustomerController {
     @Resource
     private CustomerService customerService;
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
+    @Log(title = "开户")
     @ApiOperation("开户")
     @PostMapping("/add")
     public Result addCustomer(@RequestBody CustomerDto customerDto) {
         String email = customerDto.getEmail();
-        if (StrUtil.isEmpty(email)) {
-            return Result.build(null, 204, "邮箱为空");
-        }
-        Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$");
-        Matcher emailMatcher = emailPattern.matcher(email);
-        if (!emailMatcher.matches()) {
-            return Result.build(null, 205, "邮箱格式错误");
-        }
+//        if (StrUtil.isEmpty(email)) {
+//            return Result.build(null, 204, "邮箱为空");
+//        }
+//        Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$");
+//        Matcher emailMatcher = emailPattern.matcher(email);
+//        if (!emailMatcher.matches()) {
+//            return Result.build(null, 205, "邮箱格式错误");
+//        }
         String mobile = customerDto.getMobile();
         if (StrUtil.isEmpty(mobile)) {
             return Result.build(null, 206, "手机号码为空");
@@ -90,9 +99,10 @@ public class CustomerController {
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "通过身份证号码查询单个客户信息")
     @ApiOperation("通过身份证号码查询单个客户信息")
-    @GetMapping("/get")
-    public Result get(String identityNumber) {
+    @GetMapping("/getByIdCard")
+    public Result get(@RequestParam("identityNumber") String identityNumber) {
         LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Customer::getIdentityNumber, identityNumber);
         Customer customer = customerService.getOne(queryWrapper);
@@ -103,6 +113,7 @@ public class CustomerController {
         return Result.build(customerVo, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "修改客户信息/修改风险评估")
     @ApiOperation("修改客户信息/修改风险评估")
     @PutMapping("/update")
     public Result editCustomer(@RequestBody CustomerUpdateDto customerDto) {
@@ -110,6 +121,7 @@ public class CustomerController {
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "注销客户")
     @ApiOperation("注销客户")
     @DeleteMapping("/delete/{id}")
     public Result cancelCustomer(@PathVariable Long id) {
@@ -117,9 +129,13 @@ public class CustomerController {
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "根据姓名查询用户信息")
     @ApiOperation("根据姓名查询用户信息")
     @GetMapping("/getByName")
     public Result getByName(@RequestParam String realName) {
+        if (StrUtil.isNullOrUndefined(realName)) {
+            return Result.build(null, 400, "姓名为空！");
+        }
         LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Customer::getRealName, realName);
         Customer customer = customerService.getOne(queryWrapper);
@@ -127,12 +143,14 @@ public class CustomerController {
         return Result.build(customerDto, ResultCodeEnum.SUCCESS);
     }
 
+    @Log(title = "校验手机号是否注册")
     @ApiOperation("校验手机号是否注册")
     @GetMapping("/checkMobile/{mobile}")
     public boolean checkMobile(@PathVariable String mobile) {
         return customerService.checkMobile(mobile);
     }
 
+    @Log(title = "校验验证码")
     @ApiOperation("校验验证码")
     @PostMapping("/checkCode")
     public Result checkCode(@RequestBody CodeDto codeDto) {
@@ -152,5 +170,30 @@ public class CustomerController {
         } else {
             return Result.build(null, 502, "验证码错误！！！");
         }
+    }
+
+    @ApiOperation("通过身份证号码查询客户所有信息（系统方法）")
+    @GetMapping("/get")
+    public Customer getCustomerByIdCard(@RequestParam("identityNumber") String identityNumber) {
+        LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Customer::getIdentityNumber, identityNumber);
+        Customer customer = customerService.getOne(queryWrapper);
+        if (customer == null) {
+            throw new BusinessException("客户不存在！");
+        }
+        return customer;
+    }
+
+    @GetMapping("/page")
+    public Result page(CustomerQuery query) {
+        PageDTO<CustomerVo> customerVoPageDTO = customerService.pageCustomerPage(query);
+        return Result.build(customerVoPageDTO, ResultCodeEnum.SUCCESS);
+    }
+
+    @ApiOperation("根据id获取客户信息")
+    @GetMapping("/get/{id}")
+    public Result getCustomer(@PathVariable Long id) {
+        Customer customer = customerService.getById(id);
+        return Result.build(BeanUtils.copyBean(customer,CustomerVo.class), ResultCodeEnum.SUCCESS);
     }
 }

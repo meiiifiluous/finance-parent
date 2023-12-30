@@ -29,7 +29,10 @@ spring:
           uri: lb://service-sms
           predicates:
             - Path=/sms/**
-
+        - id: trade
+          uri: lb://trade-service
+          predicates:
+            - Path=/trade/**
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:

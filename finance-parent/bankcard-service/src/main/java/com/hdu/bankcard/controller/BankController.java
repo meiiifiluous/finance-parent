@@ -1,6 +1,7 @@
 package com.hdu.bankcard.controller;
 
 
+import com.hdu.finance.common.annotion.CounterValidation;
 import com.hdu.finance.common.domain.vo.BankVo;
 import com.hdu.bankcard.service.BankService;
 import com.hdu.finance.common.domain.common.Result;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/bank")
 @Api(tags = "银行信息管理")
+@CounterValidation
 public class BankController {
     @Resource
     private BankService bankService;

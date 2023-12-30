@@ -1,6 +1,7 @@
 package com.hdu.dict.controller;
 
 
+import com.hdu.finance.common.annotion.CounterValidation;
 import com.hdu.finance.common.annotion.Log;
 import com.hdu.finance.common.domain.po.Dict;
 import com.hdu.finance.common.domain.vo.DictTypeVo;
@@ -32,9 +33,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/dict")
 @Api(tags = "字典接口")
+@CounterValidation
 public class DictController {
     @Resource
     private DictService dictService;
+    @Log(title = "获取基金类型")
     @ApiOperation("获取基金类型")
     @GetMapping("/fund/type/list")
     public Result getFundType(){
@@ -44,7 +47,7 @@ public class DictController {
                 .collect(Collectors.toList());
         return Result.build(list, ResultCodeEnum.SUCCESS);
     }
-
+    @Log(title = "获取证件类型")
     @ApiOperation("获取证件类型")
     @GetMapping("/certificate/type/list")
     public Result getCERTIFICATEType(){

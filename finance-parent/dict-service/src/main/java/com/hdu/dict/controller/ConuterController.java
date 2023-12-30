@@ -17,12 +17,26 @@ import javax.annotation.Resource;
 @Api(tags = "柜台接口")
 public class ConuterController {
     @Resource
-    private RedisTemplate<String ,String > redisTemplate;
-    @ApiOperation("更改柜台状态")
+    private RedisTemplate<String, String> redisTemplate;
+
+    @ApiOperation("关闭柜台")
     @Log(title = "关闭柜台")
-    @PostMapping
-    public Result changeCounterStatus(){
-        redisTemplate.opsForValue().set("counter",String.valueOf(0));
-        return Result.build(null, ResultCodeEnum.SUCCESS);
+    @PostMapping("/closeCounter")
+    public Result CloseCounter() {
+        String counter = redisTemplate.opsForValue().get("counter");
+        if (counter.equals("1")) {
+            redisTemplate.opsForValue().set("counter", String.valueOf(0));
+            return Result.build(null, ResultCodeEnum.SUCCESS);
+        }else return Result.build(null,100,"柜台已关闭");
+    }
+    @ApiOperation("开启柜台")
+    @Log(title = "开启柜台")
+    @PostMapping("activateCounter")
+    public Result ActivateCounter(){
+        String counter = redisTemplate.opsForValue().get("counter");
+        if (counter.equals("0")) {
+            redisTemplate.opsForValue().set("counter", String.valueOf(1));
+            return Result.build(null,200,"开启柜台！");
+        }else return Result.build(null,100,"柜台已开启");
     }
 }

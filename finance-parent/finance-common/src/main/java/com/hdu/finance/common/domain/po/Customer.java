@@ -1,11 +1,11 @@
 package com.hdu.finance.common.domain.po;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -29,67 +29,60 @@ public class Customer implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 客户号
-     */
+    @ApiModelProperty(value = "客户号")
+    @TableField("customer_id")
     private String customerId;
 
-    /**
-     * 绑定邮箱
-     */
+    @ApiModelProperty(value = "绑定邮箱")
+    @TableField("email")
     private String email;
 
-    /**
-     * 证件号码
-     */
+    @ApiModelProperty(value = "证件号码")
+    @TableField("identity_number")
     private String identityNumber;
 
-    /**
-     * 证件类型
-     */
+    @ApiModelProperty(value = "证件类型")
+    @TableField("identity_typer")
     private String identityTyper;
 
-    /**
-     * 绑定手机
-     */
+    @ApiModelProperty(value = "绑定手机")
+    @TableField("mobile")
     private String mobile;
 
-    /**
-     * 真实姓名
-     */
+    @ApiModelProperty(value = "真实姓名")
+    @TableField("real_name")
     private String realName;
 
-    /**
-     * 用户状态(0-异常，1-正常）
-     */
+    @ApiModelProperty(value = "用户状态(0-异常，1-正常）")
+    @TableField("status")
     private Integer status;
 
-    /**
-     * 创建人
-     */
+    @ApiModelProperty(value = "创建人")
+    @TableField("create_by")
     private String createBy;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
+    @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 修改人
-     */
+    @ApiModelProperty(value = "修改人")
+    @TableField("update_by")
     private String updateBy;
 
-    /**
-     * 修改时间
-     */
+    @ApiModelProperty(value = "修改时间")
+    @TableField("update_time")
     private LocalDateTime updateTime;
 
-    /**
-     * 投资类型（1-保守型，2-稳健型，3-激进型）
-     */
+    @ApiModelProperty(value = "投资类型（1-保守型，2-稳健型，3-激进型）")
+    @TableField("investment_type")
     private Integer investmentType;
-    @TableLogic
-    private Integer isDeleted;
+
+    @TableField("is_deleted")
+    private Boolean isDeleted;
+
+    @ApiModelProperty(value = "反洗钱标志")
+    @TableField("aml_flag")
+    private String amlFlag;
 
 
 }

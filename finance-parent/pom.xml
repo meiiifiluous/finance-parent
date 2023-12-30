@@ -17,6 +17,7 @@
         <module>bankcard-service</module>
         <module>finance-gateway</module>
         <module>service-sms</module>
+        <module>trade-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

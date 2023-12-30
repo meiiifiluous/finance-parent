@@ -25,7 +25,8 @@ public class FundServiceImpl extends ServiceImpl<FundMapper, Fund> implements Fu
 
     @Override
     public PageDTO<FundVo> queryFundPage(FundQuery query) {
-        Page<Fund> page = lambdaQuery().like(StrUtil.isNotBlank(query.getChiNameAbbr()), Fund::getChiNameAbbr, query.getChiNameAbbr())
+        Page<Fund> page = lambdaQuery()
+                .like(StrUtil.isNotBlank(query.getChiNameAbbr()), Fund::getChiNameAbbr, query.getChiNameAbbr())
                 .eq(StrUtil.isNotBlank(query.getFundCode()), Fund::getFundCode, query.getFundCode())
                 .eq(StrUtil.isNotBlank(query.getFundType()), Fund::getFundType, query.getFundType())
                 .page(query.toMpPage("one_year_profit", false));

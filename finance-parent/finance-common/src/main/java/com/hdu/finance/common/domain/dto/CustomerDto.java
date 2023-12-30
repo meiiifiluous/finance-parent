@@ -12,7 +12,11 @@ public class CustomerDto {
     @ApiModelProperty("绑定邮箱")
     private String email;
 
-
+    /**
+     * 客户号
+     */
+    @ApiModelProperty("客户号")
+    private String customerId;
     /**
      * 绑定手机
      */

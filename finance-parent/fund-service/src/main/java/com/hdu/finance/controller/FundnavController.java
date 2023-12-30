@@ -12,6 +12,7 @@ import com.hdu.finance.service.FundService;
 import com.hdu.finance.service.FundnavService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.bouncycastle.tsp.TSPUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -65,6 +66,7 @@ public class FundnavController {
                 .list().stream().map(fundnav1 -> BeanUtils.copyBean(fundnav1, HistoryNetvalue.class))
                 .collect(Collectors.toList());
         fundnavVo.setHistoryNetvalueList(list);
+        System.out.println(fundnavVo);
         return Result.build(fundnavVo, ResultCodeEnum.SUCCESS);
     }
 

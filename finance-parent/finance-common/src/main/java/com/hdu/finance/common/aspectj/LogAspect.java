@@ -115,9 +115,10 @@ public class LogAspect {
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 设置消耗时间
             operLog.setCostTime(System.currentTimeMillis() - TIME_THREADLOCAL.get());
-
+            log.info("设置操作日志对象");
             // 保存数据库
             logService.save(operLog);
+            log.info("保存操作日志对象");
 
         } catch (Exception exp) {
             // 记录本地异常日志

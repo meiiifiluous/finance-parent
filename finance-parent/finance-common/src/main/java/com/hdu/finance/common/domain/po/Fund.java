@@ -58,13 +58,13 @@ public class Fund implements Serializable {
      * 申购状态（0-可申购，1-不可申购）
      */
     @TableField("is_apply")
-    private Integer isApply;
+    private Boolean isApply;
 
     /**
      * 赎回状态（0-可赎回，1-不可赎回）
      */
     @TableField("is_redemption")
-    private Integer isRedemption;
+    private Boolean isRedemption;
 
     /**
      * 产品状态（0-正常，1-异常）
@@ -138,11 +138,6 @@ public class Fund implements Serializable {
     @TableField("charge")
     private Integer charge;
 
-    /**
-     * 账户类型
-     */
-    @TableField("to_account_type")
-    private String toAccountType;
 
     /**
      * 风险级别
@@ -166,7 +161,7 @@ public class Fund implements Serializable {
      * 购买份额数量
      */
     @TableField("buyed_count")
-    private Long BuyedCount;
+    private BigDecimal BuyedCount;
 
     /**
      *  投资领域

@@ -2,6 +2,8 @@ package com.hdu.finance.common.domain.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class CustomerVo {
     private Long id;
@@ -39,4 +41,5 @@ public class CustomerVo {
      * 投资类型（1-保守型，2-稳健型，3-激进型）
      */
     private Integer investmentType;
+    private LocalDateTime createTime;
 }

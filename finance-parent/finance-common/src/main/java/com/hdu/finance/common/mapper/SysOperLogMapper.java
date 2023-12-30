@@ -4,6 +4,7 @@ package com.hdu.finance.common.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hdu.finance.common.domain.po.SysOperLog;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -13,6 +14,7 @@ import com.hdu.finance.common.domain.po.SysOperLog;
  * @author vvc
  * @since 2023-12-06
  */
+@Mapper
 public interface SysOperLogMapper extends BaseMapper<SysOperLog> {
 
 }
